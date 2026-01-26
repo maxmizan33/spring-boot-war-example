@@ -21,11 +21,8 @@ public class HelloWorldApplication extends SpringBootServletInitializer {
     }
 
 
-    @RequestMapping("/")
-    String helloWorld() {
-        return "This Web App deployed, fully automated**** Kasa laga mera majak *****";
-    }
-
+ 
 }
+
 
 
