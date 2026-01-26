@@ -23,8 +23,9 @@ public class HelloWorldApplication extends SpringBootServletInitializer {
 
     @RequestMapping("/")
     String helloWorld() {
-        return "This is first pipeline project";
+        return "This Web App deployed, fully automated**** Kasa laga mera majak *****";
     }
 
 }
+
 
