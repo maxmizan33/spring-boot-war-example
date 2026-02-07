@@ -21,17 +21,16 @@ pipeline {
                 deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'Tomcat-test', path: '', url: 'http://192.168.122.204:8080')], contextPath: '/app', war: '**/*.war'
             }
         }
-        stage('Input from Admin') {
+       
+        stage('Deployed on Production ENV') {
             steps {
-                Input {
+                 Input {
                       message "Should we continue?"
                 ok "Yes, we should."
                 }
+                  steps {
+                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'Tomcat-test', path: '', url: 'http://192.168.122.204:8080')], contextPath: '/app', war: '**/*.war'
             }
-        }
-        stage('Deployed on Production ENV') {
-            steps {
-                echo 'Hello World'
             }
         }
     }
