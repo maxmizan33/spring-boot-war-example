@@ -1,7 +1,6 @@
 pipeline {
     agent any
     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
         maven "Maven"
     }
 
@@ -20,6 +19,35 @@ pipeline {
             steps {
                 deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'Tomcat-test', path: '', url: 'http://192.168.122.204:8080')], contextPath: '/app', war: '**/*.war'
             }
+             success {
+            emailext(
+                subject: "✅ TestEnvironment Deployment SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                Test Environment Deployment Completed Successfully.
+                Wating for your approval to deployed on PRODUCTION
+
+                Job: ${env.JOB_NAME}
+                Build: ${env.BUILD_NUMBER}
+                URL: ${env.BUILD_URL}
+                """,
+                to: "maxmizan33@gmail.com"
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "❌ Test Deployment FAILED - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+                Production Deployment FAILED.
+
+                Job: ${env.JOB_NAME}
+                Build: ${env.BUILD_NUMBER}
+                Please check console log:
+                ${env.BUILD_URL}
+                """,
+                to: "maxmizan33@gmail.com"
+            )
+        }
         }
        
         stage('Deployed on Production ENV') {
