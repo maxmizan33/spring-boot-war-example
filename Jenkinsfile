@@ -8,17 +8,17 @@ pipeline {
     stages {
         stage('Test MVN') {
             steps {
-                echo 'Hello World'
+                sh 'mvn test'
             }
         }
         stage('Build MVN') {
             steps {
-                echo 'Hello World'
+                sh 'mnv packages'
             }
         }
         stage('Deployed on Test ENV') {
             steps {
-                echo 'Hello World'
+                deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'Tomcat-test', path: '', url: 'http://192.168.122.204:8080')], contextPath: '/app', war: '**/*.war'
             }
         }
         stage('Input from Admin') {
