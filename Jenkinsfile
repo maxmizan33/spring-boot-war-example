@@ -24,7 +24,7 @@ pipeline {
        
         stage('Deployed on Production ENV') {
             steps {
-                 Input {
+                 input {
                       message "Should we continue?"
                 ok "Yes, we should."
                 }
