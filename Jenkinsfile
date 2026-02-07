@@ -1,57 +1,38 @@
 pipeline {
     agent any
-     tools {
-        maven 'Maven' 
-        }
-    stages {
-        stage("Test"){
-            steps{
-                // mvn test
-                sh "mvn test"
-                slackSend channel: 'youtubejenkins', message: 'Job Started'
-                
-            }
-            
-        }
-        stage("Build"){
-            steps{
-                sh "mvn package"
-                
-            }
-            
-        }
-        stage("Deploy on Test"){
-            steps{
-                // deploy on container -> plugin
-                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails1', path: '', url: 'http://192.168.0.118:8080')], contextPath: '/app', war: '**/*.war'
-              
-            }
-            
-        }
-        stage("Deploy on Prod"){
-             input {
-                message "Should we continue?"
-                ok "Yes we Should"
-            }
-            
-            steps{
-                // deploy on container -> plugin
-                deploy adapters: [tomcat9(credentialsId: 'tomcatserverdetails1', path: '', url: 'http://192.168.0.119:8080')], contextPath: '/app', war: '**/*.war'
-
-            }
-        }
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "Maven"
     }
-    post{
-        always{
-            echo "========always========"
+
+    stages {
+        stage('Test MVN') {
+            steps {
+                echo 'Hello World'
+            }
         }
-        success{
-            echo "========pipeline executed successfully ========"
-             slackSend channel: 'youtubejenkins', message: 'Success'
+        stage('Build MVN') {
+            steps {
+                echo 'Hello World'
+            }
         }
-        failure{
-            echo "========pipeline execution failed========"
-             slackSend channel: 'youtubejenkins', message: 'Job Failed'
+        stage('Deployed on Test ENV') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+        stage('Input from Admin') {
+            steps {
+                Input {
+                      message "Should we continue?"
+                ok "Yes, we should."
+                }
+            }
+        }
+        stage('Deployed on Production ENV') {
+            steps {
+                echo 'Hello World'
+            }
         }
     }
 }
