@@ -48,8 +48,7 @@ pipeline {
                 to: "maxmizan33@gmail.com"
             )
         }
-        }
-       
+    
         stage('Deployed on Production ENV') {
             steps {
                 input message: 'Do you want to deploy to Production?', ok: 'Deploy'
