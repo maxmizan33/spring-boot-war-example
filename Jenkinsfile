@@ -24,10 +24,7 @@ pipeline {
        
         stage('Deployed on Production ENV') {
             steps {
-                 input {
-                      message "Should we continue?"
-                ok "Yes, we should."
-                }
+                input message: 'Do you want to deploy to Production?', ok: 'Deploy'
                   steps {
                 deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'Tomcat-test', path: '', url: 'http://192.168.122.205:8080')], contextPath: '/app', war: '**/*.war'
             }
