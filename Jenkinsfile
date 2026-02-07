@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build MVN') {
             steps {
-                sh 'mnv packages'
+                sh 'mvn packages'
             }
         }
         stage('Deployed on Test ENV') {
